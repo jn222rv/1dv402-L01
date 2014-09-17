@@ -38,20 +38,20 @@ namespace _1_1_vaxelpengar
             while (cki.Key != ConsoleKey.Escape);
         }
 
-        static uint TestMethod(uint test, uint bills)
+        static uint Count(uint total, uint currency)
         {
             uint returnValue;
 
             //Divide by Zero Error - unsolved
-            uint rest = test % bills;
+            uint rest = total % currency;
 
             if (rest == 0)
             {
-                returnValue = test / bills;
+                returnValue = total / currency;
             }
             else
             {
-                returnValue = (test - rest)/bills;
+                returnValue = (total - rest) / currency;
             }
 
             return returnValue;
@@ -127,7 +127,7 @@ namespace _1_1_vaxelpengar
             for (int i = 0; i < denominations.Length; i++)
             {
                 uint times = denominations[i];
-                denominations[i] = TestMethod(change, denominations[i]);
+                denominations[i] = Count(change, denominations[i]);
                 change -= denominations[i] * times;
             }
 
