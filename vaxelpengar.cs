@@ -43,27 +43,27 @@ namespace _1_1_vaxelpengar
             while (cki.Key != ConsoleKey.Escape);
         }
 
-        static uint Count(uint total, uint currency)
+        static uint NumberOfTimes(uint total, uint note)
         {
-            uint returnValue;
+            uint NumberOfTimes;
 
-            uint rest = total % currency;
+            uint rest = total % note;
 
             if (rest == 0)
             {
-                returnValue = total / currency;
+                NumberOfTimes = total / note;
             }
             else
             {
-                returnValue = (total - rest) / currency;
+                NumberOfTimes = (total - rest) / note;
             }
 
-            return returnValue;
+            return NumberOfTimes;
         }
 
         static double ReadPositiveDouble(string prompt)
         {
-            double value = 3.0;
+            double value;
 
             while (true)
             {
@@ -74,7 +74,7 @@ namespace _1_1_vaxelpengar
                     value = double.Parse(str);
                     if (value < 0)
                     {
-                        throw new ArgumentException();
+                        throw new Exception();
                     }
                     else
                     {
@@ -84,16 +84,14 @@ namespace _1_1_vaxelpengar
                         }
                         else
                         {
-                            ViewMessage("Läs instruktionerna, välj nytt nummer: ", true);
+                            ViewMessage("Talet måste vara minst 1, välj nytt nummer: ", true);
                             Console.WriteLine();
                         }
                     }
                 }
                 catch
                 {
-                    ViewMessage("FEL! '", true);
-                    ViewMessage(str, true);
-                    ViewMessage("' kan inte tolkas som giltig summa pengar!", true);
+                    ViewMessage("FEL! '", str, "' kan inte tolkas som giltig summa pengar!", true);
                     Console.WriteLine();
                 }
             }
@@ -119,9 +117,7 @@ namespace _1_1_vaxelpengar
                 }
                 catch
                 {
-                    ViewMessage("FEL! '", true);
-                    ViewMessage(str, true);
-                    ViewMessage("' kan inte tolkas som giltig summa pengar!", true);
+                    ViewMessage("FEL! '", str, "' kan inte tolkas som giltig summa pengar!",true);
                     Console.WriteLine();
                 }
             }
@@ -132,7 +128,7 @@ namespace _1_1_vaxelpengar
             for (int i = 0; i < denominations.Length; i++)
             {
                 times = denominations[i];
-                denominations[i] = Count(change, denominations[i]);
+                denominations[i] = NumberOfTimes(change, denominations[i]);
                 change -= denominations[i] * times;
             }
 
@@ -150,6 +146,25 @@ namespace _1_1_vaxelpengar
             {
                 Console.BackgroundColor = ConsoleColor.Green;
                 Console.Write(message);
+                Console.ResetColor();
+            }
+        }
+        static void ViewMessage(string firstMessage,string secondMessage, string thirdMessage, bool isError = false)
+        {
+            if (isError)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.Write(firstMessage);
+                Console.Write(secondMessage);
+                Console.Write(thirdMessage);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.Write(firstMessage);
+                Console.Write(secondMessage);
+                Console.Write(thirdMessage);
                 Console.ResetColor();
             }
         }
@@ -171,31 +186,31 @@ namespace _1_1_vaxelpengar
 
             if (denominations[0] > 0)
             {
-                Console.WriteLine("500-lappar: {0}", denominations[0]);
+                Console.WriteLine("{0}-lappar: {1}", notes[0], denominations[0]);
             }
             if (denominations[1] > 0)
             {
-                Console.WriteLine("100-lappar: {0}", denominations[1]);
+                Console.WriteLine("{0}-lappar: {1}", notes[1], denominations[1]);
             }
             if (denominations[2] > 0)
             {
-                Console.WriteLine("50-lappar: {0}", denominations[2]);
+                Console.WriteLine("{0}-lappar: {1}", notes[2], denominations[2]);
             }
             if (denominations[3] > 0)
             {
-                Console.WriteLine("20-lappar: {0}", denominations[3]);
+                Console.WriteLine("{0}-lappar: {1}", notes[3], denominations[3]);
             }
             if (denominations[4] > 0)
             {
-                Console.WriteLine("10-kronor: {0}", denominations[4]);
+                Console.WriteLine("{0}-kronor: {1}", notes[4], denominations[4]);
             }
             if (denominations[5] > 0)
             {
-                Console.WriteLine("5-kronor: {0}", denominations[5]);
+                Console.WriteLine("{0}-kronor: {1}", notes[5], denominations[5]);
             }
             if (denominations[6] > 0)
             {
-                Console.WriteLine("1-kronor: {0}", denominations[6]);
+                Console.WriteLine("{0}-kronor: {1}", notes[6], denominations[6]);
             }
             Console.WriteLine("");
         }
