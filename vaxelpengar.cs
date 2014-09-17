@@ -14,7 +14,7 @@ namespace _1_1_vaxelpengar
             double subtotal, roundingOffAmount;
 
             uint[] notes = { 500, 100, 50, 20, 10, 5, 1 };
-            uint[] denominations;
+            uint[] denominations = { 500, 100, 50, 20, 10, 5, 1 };
             
             ConsoleKeyInfo cki;
 
@@ -27,7 +27,12 @@ namespace _1_1_vaxelpengar
                 change = cash - (uint)Math.Round(subtotal);
                 total = (uint)Math.Round(subtotal);
 
-                denominations = SplitIntoDenominations((uint)change, notes);
+                for (int i = 0; i < notes.Length; i++)
+                {
+                    denominations[i] = notes[i];
+                }
+
+                SplitIntoDenominations((uint)change, denominations);
 
                 ViewReceipt(subtotal, roundingOffAmount, total, cash, change, notes, denominations);
 
@@ -42,7 +47,6 @@ namespace _1_1_vaxelpengar
         {
             uint returnValue;
 
-            //Divide by Zero Error - unsolved
             uint rest = total % currency;
 
             if (rest == 0)
@@ -55,13 +59,13 @@ namespace _1_1_vaxelpengar
             }
 
             return returnValue;
-        } 
-        
+        }
+
         static double ReadPositiveDouble(string prompt)
         {
             double value = 3.0;
-            
-            while(true)
+
+            while (true)
             {
                 Console.Write(prompt);
                 string str = Console.ReadLine();
@@ -82,7 +86,7 @@ namespace _1_1_vaxelpengar
                         {
                             ViewMessage("Läs instruktionerna, välj nytt nummer: ", true);
                             Console.WriteLine();
-                        }                    
+                        }
                     }
                 }
                 catch
@@ -95,7 +99,7 @@ namespace _1_1_vaxelpengar
             }
         }
         static uint ReadUint(string prompt, uint minValue)
-        {           
+        {
             while (true)
             {
                 Console.Write(prompt);
@@ -124,18 +128,19 @@ namespace _1_1_vaxelpengar
         }
         static uint[] SplitIntoDenominations(uint change, uint[] denominations)
         {
+            uint times;
             for (int i = 0; i < denominations.Length; i++)
             {
-                uint times = denominations[i];
+                times = denominations[i];
                 denominations[i] = Count(change, denominations[i]);
                 change -= denominations[i] * times;
             }
 
-                return denominations;
+            return denominations;
         }
         static void ViewMessage(string message, bool isError = false)
         {
-            if(isError)
+            if (isError)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.Write(message);
@@ -148,7 +153,7 @@ namespace _1_1_vaxelpengar
                 Console.ResetColor();
             }
         }
-        
+
         static void ViewReceipt(double subtotal, double roundingOffAmount, uint total, uint cash, uint change, uint[] notes, uint[] denominations)
         {
             Console.WriteLine("");
@@ -164,35 +169,35 @@ namespace _1_1_vaxelpengar
 
             Console.WriteLine("");
 
-            if (notes[0] > 0)
+            if (denominations[0] > 0)
             {
-                Console.WriteLine("500-lappar: {0}", notes[0]);            
+                Console.WriteLine("500-lappar: {0}", denominations[0]);
             }
-            if (notes[1] > 0)
+            if (denominations[1] > 0)
             {
-                Console.WriteLine("100-lappar: {0}", notes[1]);            
+                Console.WriteLine("100-lappar: {0}", denominations[1]);
             }
-            if (notes[2] > 0)
+            if (denominations[2] > 0)
             {
-                Console.WriteLine("50-lappar: {0}", notes[2]);
-            } 
-            if (notes[3] > 0)
-            {
-                Console.WriteLine("20-lappar: {0}", notes[3]);
+                Console.WriteLine("50-lappar: {0}", denominations[2]);
             }
-            if (notes[4] > 0)
+            if (denominations[3] > 0)
             {
-                Console.WriteLine("10-kronor: {0}", notes[4]);
-            } 
-            if (notes[5] > 0)
-            {
-                Console.WriteLine("5-kronor: {0}", notes[5]);
+                Console.WriteLine("20-lappar: {0}", denominations[3]);
             }
-            if (notes[6] > 0)
+            if (denominations[4] > 0)
             {
-                Console.WriteLine("1-kronor: {0}", notes[6]);
+                Console.WriteLine("10-kronor: {0}", denominations[4]);
             }
-            Console.WriteLine("");         
+            if (denominations[5] > 0)
+            {
+                Console.WriteLine("5-kronor: {0}", denominations[5]);
+            }
+            if (denominations[6] > 0)
+            {
+                Console.WriteLine("1-kronor: {0}", denominations[6]);
+            }
+            Console.WriteLine("");
         }
-    }       
+    }
 }
