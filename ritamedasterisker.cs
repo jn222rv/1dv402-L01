@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Resources;
 
 namespace ritamedasterisker
 {
@@ -24,6 +25,15 @@ namespace ritamedasterisker
         static bool IsContinue()
         {
             ConsoleKeyInfo cki = Console.ReadKey();
+
+            string message;
+            string resxFile = @".\Strings.resx"; // relative directory to the executable file
+            ResourceSet resxSet = new ResourceSet(resxFile);
+            {
+               message = resxSet.GetString("Error_Message");
+            }
+
+            Console.WriteLine(message);
 
             if (cki.Key == ConsoleKey.Escape)
             {
