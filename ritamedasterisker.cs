@@ -24,8 +24,6 @@ namespace ritamedasterisker
         }
         static bool IsContinue()
         {
-            ConsoleKeyInfo cki = Console.ReadKey();
-
             string message;
             string resxFile = @".\Strings.resx"; // relative directory to the executable file
             ResourceSet resxSet = new ResourceSet(resxFile);
@@ -34,6 +32,8 @@ namespace ritamedasterisker
             }
 
             Console.WriteLine(message);
+
+            ConsoleKeyInfo cki = Console.ReadKey();
 
             if (cki.Key == ConsoleKey.Escape)
             {
