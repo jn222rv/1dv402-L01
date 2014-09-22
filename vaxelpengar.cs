@@ -37,8 +37,7 @@ namespace _1_1_vaxelpengar
                 ViewReceipt(subtotal, roundingOffAmount, total, cash, change, notes, denominations);
 
                 ViewMessage("Tryck tangent för mer, annar Esc");
-                cki = Console.ReadKey();
-                Console.Clear();
+                cki = Console.ReadKey(true);
             }
             while (cki.Key != ConsoleKey.Escape);
         }

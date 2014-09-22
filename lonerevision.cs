@@ -15,7 +15,6 @@ namespace lonerevision
 
             do
             {
-
                 Count = ReadInt("Skriv in hur många löner det är: ");
                 arr = ReadSalaries(Count);
                 ViewResult(arr);
@@ -28,7 +27,7 @@ namespace lonerevision
         {
             ViewMessage("\n Tryck tangent för ny beräkning - Esc Avslutar \n");
 
-            ConsoleKeyInfo cki = Console.ReadKey();
+            ConsoleKeyInfo cki = Console.ReadKey(true);
 
             if (cki.Key == ConsoleKey.Escape)
             {
@@ -89,9 +88,9 @@ namespace lonerevision
         static void ViewResult(int[] salaries)
         {
             ViewMessage("\n----------------", ConsoleColor.Black);
-            ViewMessage(String.Format("Medianen: {0}", MyExtension.Median(salaries)), ConsoleColor.Black);
-            ViewMessage(String.Format("Medellönen: {0:f2}", salaries.Average()), ConsoleColor.Black);
-            ViewMessage(String.Format("Lösespridning: {0}", MyExtension.Dispersion(salaries)), ConsoleColor.Black);
+            ViewMessage(String.Format("Medianen: {0:f0}", MyExtension.Median(salaries)), ConsoleColor.Black);
+            ViewMessage(String.Format("Medellönen: {0:f0}", salaries.Average()), ConsoleColor.Black);
+            ViewMessage(String.Format("Lösespridning: {0:f0}", MyExtension.Dispersion(salaries)), ConsoleColor.Black);
             ViewMessage("----------------\n", ConsoleColor.Black);
 
             int number = ((salaries.Length - (salaries.Length % 3)) / 3) + 1;
@@ -107,32 +106,6 @@ namespace lonerevision
             }
             Console.WriteLine();
         }
-    }
-    static class MyExtension
-    {
-        public static int Dispersion(this int[] source)
-        {
-            int[] arr = source.OrderBy(a => a).ToArray();
-
-            int number = arr.Max() - arr.Min();
-
-            return number;
-        }
-        public static int Median(this int[] source)
-        {
-            int[] arr = source.OrderBy(a => a).ToArray();
-
-            int number = arr.Length % 2;
-
-            if (number == 0)  // NOT PRETTY
-            {
-                return (int)Math.Round(((arr[arr.Length / 2] + arr[(arr.Length / 2) - 1]) / (double)2));
-            }
-            else
-            {
-                return arr[(int)Math.Floor(arr.Length / (double)2)];
-            }
-        }
-    }
+    }   
 }
 
