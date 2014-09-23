@@ -19,7 +19,6 @@ namespace ritamedasterisker
             do
             {
                 maxCount = ReadOddByte("Skriv Byte: ", maxAst);
-
                 RenderDiamond(maxCount);
             }
             while (IsContinue());
@@ -80,29 +79,34 @@ namespace ritamedasterisker
         static void RenderDiamond(byte maxCount)
         {
             Console.WriteLine();
+           
+            int astcount = 0;
+
             for (int i = 0; i < maxCount; i++)
             {
-                int newMax = maxCount;
-                int astcount;
-
-                if ((i * 2) + 1 <= newMax)
+                if (i == 0)
                 {
-                    astcount = (i * 2) + 1;
+                    astcount = 1; 
+                }  
+                else if ((i * 2) + 1 <= maxCount)
+                {
+                    astcount += 2;
                 }
                 else
                 {
-                    astcount = ((maxCount - i) - 1) * 2 + 1;
+                    astcount -= 2;
                 }
-
-                RenderRow(newMax, astcount);
+                RenderRow(maxCount, astcount);
             }
         }
         static void RenderRow(int maxCount, int asteriskCount)
         {
-            int testNumber = (maxCount - asteriskCount) / 2;
+            int minInterval = (maxCount - asteriskCount) / 2;
+            int maxInterval = (maxCount - minInterval) - 1;
+
             for (int i = 0; i < maxCount; i++)
             {
-                if (i < testNumber || i >= maxCount - testNumber)
+                if (i < minInterval || i > maxInterval)
                 {
                     Console.Write(" ");
                 }
