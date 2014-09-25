@@ -24,17 +24,17 @@ namespace vaxelpengar
                 subtotal = ReadPositiveDouble(Strings.SubTotal_Prompt);
                 cash = ReadUint(Strings.Cash_Prompt, (uint)Math.Round(subtotal));
 
-                roundingOffAmount = (int)Math.Round(subtotal);
-                change = cash - (uint)Math.Round(subtotal);
-                total = (uint)Math.Round(subtotal);
+                roundingOffAmount = Math.Round(subtotal)-subtotal;
+                total = (uint)(subtotal - roundingOffAmount);
+                change = cash - total;
 
                 denominations = SplitIntoDenominations((uint)change, notes);
 
                 ViewReceipt(subtotal, roundingOffAmount, total, cash, change, notes, denominations);
 
                 ViewMessage(Strings.Continue_Prompt);
-                cki = Console.ReadKey(true); 
-                Console.WriteLine();
+                cki = Console.ReadKey(true);
+                Console.Clear();
             }
             while (cki.Key != ConsoleKey.Escape);
         }        
@@ -157,8 +157,8 @@ namespace vaxelpengar
             Console.WriteLine("Kvitto");
             Console.WriteLine("----------------------------------");
             Console.WriteLine("Total Summa är     :      {0,5} kr", subtotal);
-            Console.WriteLine("Avrundingen blir   :      {0,5:f2} kr", roundingOffAmount - subtotal);
-            Console.WriteLine("Att betala         :      {0,5} kr", roundingOffAmount);
+            Console.WriteLine("Avrundingen blir   :      {0,5:f2} kr", roundingOffAmount);
+            Console.WriteLine("Att betala         :      {0,5} kr", total);
             Console.WriteLine("Kontant            :      {0,5} kr", cash);
             Console.WriteLine("Tillbaka           :      {0,5} kr", change);
             Console.WriteLine("----------------------------------\n");

@@ -30,14 +30,7 @@ namespace lonerevision
             ConsoleKeyInfo cki = Console.ReadKey(true);
             Console.WriteLine();
 
-            if (cki.Key == ConsoleKey.Escape)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return cki.Key != ConsoleKey.Escape;
         }
 
         static int ReadInt(string prompt)
@@ -104,15 +97,17 @@ namespace lonerevision
 
         static void ViewResult(int[] salaries)
         {
-            ViewMessage("\n------------------------", ConsoleColor.Black, ConsoleColor.Gray);
-            ViewMessage(String.Format("Medianen:        {0,5:N0} kr", MyExtension.Median(salaries)), ConsoleColor.Black, ConsoleColor.Gray);
-            ViewMessage(String.Format("Medellönen:      {0,5:N0} kr", salaries.Average()), ConsoleColor.Black, ConsoleColor.Gray);
-            ViewMessage(String.Format("Lösespridning:   {0,5:N0} kr", MyExtension.Dispersion(salaries)), ConsoleColor.Black, ConsoleColor.Gray);
-            ViewMessage("------------------------\n", ConsoleColor.Black, ConsoleColor.Gray);
+            Console.WriteLine();
+            ViewMessage(Strings.Filler, ConsoleColor.Black, ConsoleColor.Gray);
+            ViewMessage(String.Format(Strings.Median, MyExtension.Median(salaries)), ConsoleColor.Black, ConsoleColor.Gray);
+            ViewMessage(String.Format(Strings.Medel, salaries.Average()), ConsoleColor.Black, ConsoleColor.Gray);
+            ViewMessage(String.Format(Strings.Dispersion, MyExtension.Dispersion(salaries)), ConsoleColor.Black, ConsoleColor.Gray);
+            ViewMessage(Strings.Filler, ConsoleColor.Black, ConsoleColor.Gray);
+            Console.WriteLine();
 
             for (int i = 0; i < salaries.Length; i++)
             {
-                Console.Write("{0,7}", salaries[i]);
+                Console.Write(Strings.Number, salaries[i]);
 
                 if ((i + 1) % 3 == 0 && i!=salaries.Length-1)
                 {

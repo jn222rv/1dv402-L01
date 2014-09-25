@@ -32,18 +32,9 @@ namespace ritamedasterisker
             Console.ResetColor();
 
             ConsoleKeyInfo cki = Console.ReadKey(true);
+            Console.Clear();
 
-            Console.WriteLine();
-            Console.WriteLine();
-
-            if (cki.Key == ConsoleKey.Escape)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return cki.Key != ConsoleKey.Escape;
         }
         static byte ReadOddByte(string prompt = null, byte maxCount = 255)
         {
